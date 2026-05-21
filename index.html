@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WAEC 2026 Countdown</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0f172a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+  }
+  .container {
+    text-align: center;
+    background: #1e293b;
+    padding: 40px 50px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #38bdf8;
+  }
+  h2 {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #94a3b8;
+    margin-bottom: 30px;
+  }
+  .timer {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .box {
+    background: #0f172a;
+    padding: 20px;
+    border-radius: 12px;
+    min-width: 80px;
+  }
+  .box span {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #facc15;
+  }
+  .box small {
+    font-size: 0.9rem;
+    color: #cbd5e1;
+  }
+  .done {
+    font-size: 2rem;
+    color: #4ade80;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>WAEC 2026 Countdown</h1>
+  <h2>Ends: Friday, 19 June 2026</h2>
+  <div class="timer" id="timer">
+    <div class="box"><span id="days">0</span><small>Days</small></div>
+    <div class="box"><span id="hours">0</span><small>Hours</small></div>
+    <div class="box"><span id="minutes">0</span><small>Minutes</small></div>
+    <div class="box"><span id="seconds">0</span><small>Seconds</small></div>
+  </div>
+</div>
+
+<script>
+  // Using UTC to avoid timezone issues
+  const endDate = Date.UTC(2026, 5, 19, 0, 0, 0); // Month is 0-indexed, so 5 = June
+
+  const updateTimer = setInterval(() => {
+    const now = Date.now();
+    const distance = endDate - now;
+
+    if (distance <= 0) {
+      document.getElementById("timer").innerHTML = '<div class="done">🎉 WAEC is over!</div>';
+      clearInterval(updateTimer);
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerText = days;
+    document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+    document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+    document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+  }, 1000);
+</script>
+</body>
+</html>
+  
